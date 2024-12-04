@@ -1,4 +1,4 @@
-name: Test Workflow
+name: Minimal Workflow Test
 
 on:
   workflow_dispatch: # Allows manual triggering
@@ -8,5 +8,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Print Python version
+        run: python --version
