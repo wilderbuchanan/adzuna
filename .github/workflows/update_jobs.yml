@@ -28,3 +28,14 @@ jobs:
 
       - name: Run job processing script
         run: python process_jobs.py
+
+      - name: List files in directory
+        run: ls -lah
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add jobs.json
+          git commit -m "Update jobs feed"
+          git push
