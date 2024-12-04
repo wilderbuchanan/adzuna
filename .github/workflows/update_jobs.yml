@@ -1,7 +1,5 @@
-name: Set up Python
-uses: actions/setup-python@v4
-with:
-  python-version: 3.10 # Use Python 3.10 or another valid version
+name: Update Jobs Feed
+
 # Trigger the workflow daily at midnight UTC
 on:
   schedule:
@@ -21,7 +19,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.10 # Use Python 3.10 or another supported version
+        python-version: 3.14 # Use Python 3.10 or another supported version
 
     # Step 3: Install Python dependencies
     - name: Install dependencies
