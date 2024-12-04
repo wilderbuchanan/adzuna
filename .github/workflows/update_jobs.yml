@@ -2,12 +2,12 @@ name: Update Jobs Feed
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Daily at midnight UTC
-  workflow_dispatch: # Allows manual trigger
+    - cron: "0 0 * * *" # Runs daily at midnight UTC
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
   update-jobs:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-22.04 # Use a specific Ubuntu version
 
     steps:
       - name: Checkout repository

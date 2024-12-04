@@ -9,21 +9,23 @@ try:
     response = requests.get(url)
     response.raise_for_status()  # Raise an error for HTTP issues
 
-    # Check for valid response content
-    if not response.content:
-        print("Error: Received empty response from the server.")
+    # Debug: Check response status and content length
+    print(f"Response status code: {response.status_code}")
+    print(f"Response content length: {len(response.content)} bytes")
+
+    if response.status_code != 200 or len(response.content) == 0:
+        print("Error: Invalid response received. Exiting.")
         exit(1)
 
     # Decompress the Gzipped content
-    compressed_data = response.content  # Use .content to get raw bytes
     try:
-        xml_data = gzip.decompress(compressed_data).decode("utf-8")
+        xml_data = gzip.decompress(response.content).decode("utf-8")
         print("Fetched and decompressed XML data successfully.")
     except gzip.BadGzipFile as e:
         print(f"Error decompressing XML data: {e}")
         exit(1)
 
-    # Debug: Print the first 500 characters of XML data
+    # Debug: Print decompressed XML data
     print("Debug: Fetched XML data (first 500 characters):")
     print(xml_data[:500])
 
