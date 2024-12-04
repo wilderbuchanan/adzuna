@@ -3,7 +3,7 @@ name: Update Jobs Feed
 on:
   schedule:
     - cron: "0 0 * * *" # Runs daily at midnight UTC
-  workflow_dispatch: # Allows manual triggering of the workflow
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
   update-jobs:
@@ -38,3 +38,4 @@ jobs:
           git add jobs.json
           git commit -m "Update jobs feed"
           git push
+
