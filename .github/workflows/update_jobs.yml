@@ -1,12 +1,17 @@
-name: Minimal Workflow Test
+name: Update Jobs Feed
 
 on:
   workflow_dispatch: # Allows manual triggering
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # Use a specific Ubuntu version
 
     steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
       - name: Print Python version
         run: python --version
