@@ -48,12 +48,31 @@ try:
             location = f"{job.find('city').text}, {job.find('state').text}, {job.find('country').text}"
             url = job.find("url").text
 
+            # Add UTM parameters to the URL
+            utm_url = f"{url}?utm_source=adzuna&utm_medium=website&utm_campaign=zuna-listing"
+
+            # Determine tags based on title
+            tags = []
+            if "mechanical" in title.lower():
+                tags.append("mechanical engineering")
+            if "internship" in title.lower():
+                tags.append("internship")
+            if "co-op" in title.lower():
+                tags.append("co-op")
+            if "manufacturing" in title.lower():
+                tags.append("manufacturing")
+            if "quality" in title.lower():
+                tags.append("quality")
+
+            # Add job data to the list
             jobs.append({
                 "title": title,
                 "description": description,
                 "company": company,
                 "location": location,
-                "url": url
+                "url": utm_url,
+                "tags": tags,
+                "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Tesla_logo.png/640px-Tesla_logo.png"
             })
         except AttributeError as e:
             print(f"Warning: Missing data in job entry: {e}")

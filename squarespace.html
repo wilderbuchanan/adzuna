@@ -1,40 +1,58 @@
-<div id="job-listings"></div>
+<div id="job-listings">
+  <ul id="job-listings-ul"></ul>
+</div>
+
 <script>
   // Fetch the jobs data from GitHub
-  fetch('https://raw.githubusercontent.com/<your-username>/<repository-name>/main/jobs.json')
+  fetch('https://raw.githubusercontent.com/wilderbuchanan/adzuna/master/jobs.json')
     .then(response => {
       if (!response.ok) {
-        throw new Error('Network response was not ok ' + response.statusText);
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
       return response.json();
     })
     .then(data => {
-      // Container for job listings
-      const jobListings = document.getElementById('job-listings');
+      const jobListingsUl = document.getElementById('job-listings-ul');
 
-      if (!data || data.length === 0) {
-        jobListings.innerHTML = '<p>No jobs available at the moment.</p>';
-        return;
-      }
+      // Limit the data to the first 20 jobs
+      const limitedJobs = data.slice(0, 20);
 
-      // Generate HTML for job postings
-      let html = '<ul>';
-      data.forEach(job => {
-        html += `
-          <li>
-            <h3>${job.title}</h3>
-            <p><strong>Company:</strong> ${job.company}</p>
-            <p><strong>Location:</strong> ${job.location}</p>
-            <p>${job.description}</p>
-            <a href="${job.url}" target="_blank">View Job</a>
-          </li>
-        `;
+      limitedJobs.forEach(job => {
+        const li = document.createElement('li');
+
+        // Job Information
+        const jobInfoWrapper = document.createElement('div');
+        jobInfoWrapper.classList.add('job-info-wrapper');
+        const h3 = document.createElement('h3');
+        h3.textContent = job.title;
+        const company = document.createElement('p');
+        company.classList.add('company-name');
+        company.textContent = job.company;
+        const location = document.createElement('p');
+        location.classList.add('location');
+        location.textContent = job.location;
+        const description = document.createElement('p');
+        description.classList.add('description');
+        description.textContent = job.description;
+
+        // Apply Button
+        const applyButton = document.createElement('a');
+        applyButton.href = job.url;
+        applyButton.target = "_blank";
+        applyButton.classList.add('apply-button');
+        applyButton.textContent = 'Apply Now';
+
+        // Append elements to the list item
+        jobInfoWrapper.appendChild(h3);
+        jobInfoWrapper.appendChild(company);
+        jobInfoWrapper.appendChild(location);
+        jobInfoWrapper.appendChild(description);
+        li.appendChild(jobInfoWrapper);
+        li.appendChild(applyButton);
+
+        // Add the list item to the job list
+        jobListingsUl.appendChild(li);
       });
-      html += '</ul>';
-      jobListings.innerHTML = html;
     })
-    .catch(error => {
-      console.error('Error fetching jobs:', error);
-      document.getElementById('job-listings').innerHTML = '<p>Error loading job postings.</p>';
-    });
+    .catch(error => console.error('Error loading job data:', error));
 </script>
