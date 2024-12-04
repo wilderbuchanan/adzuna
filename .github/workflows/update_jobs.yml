@@ -3,7 +3,7 @@ name: Update Jobs Feed
 on:
   schedule:
     - cron: "0 0 * * *" # Runs daily at midnight UTC
-  workflow_dispatch: # Allows manual triggering
+  workflow_dispatch: # Allows manual triggering of the workflow
 
 jobs:
   update-jobs:
@@ -18,7 +18,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.10 # Specify a valid Python version
+          python-version: "3.10"
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -26,7 +26,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install requests
 
-      # Step 4: Run the Python script
+      # Step 4: Run the script
       - name: Run job processing script
         run: python process_jobs.py
 
